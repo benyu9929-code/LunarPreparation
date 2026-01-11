@@ -19,89 +19,210 @@
 }
 
 body, html { height: 100%; margin: 0; font-family: 'Inter', sans-serif; overflow: hidden; background: var(--bg-gradient); color: var(--text-main); }
-
 .app-container { height: 100vh; display: flex; flex-direction: column; }
+
+/* Header & Fade */
+.app-header { flex-shrink: 0; padding: 50px 20px 20px; z-index: 10; border-radius: 0 0 25px 25px; transition: opacity 0.3s ease, transform 0.3s ease; }
+.header-main-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+
+/* Theme Toggle Circle */
+.theme-switch { width: 45px; height: 45px; background: var(--glass-inner); border: 1px solid var(--glass-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
 .glass { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); }
 .glass-inner { background: var(--glass-inner); border: 1px solid var(--glass-border); border-radius: 12px; }
 
-.app-header { flex-shrink: 0; padding: 50px 20px 20px; z-index: 10; border-radius: 0 0 25px 25px; }
-.header-main-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.date-text { font-size: 11px; font-weight: 700; opacity: 0.6; text-transform: uppercase; }
-#app-title { margin: 0; font-size: 24px; font-weight: 800; }
 .moon-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.moon-card { padding: 10px; border-radius: 12px; }
+.moon-card { padding: 10px; border-radius: 12px; cursor: pointer; }
 .moon-card .label { display: block; font-size: 10px; opacity: 0.7; }
-.moon-card .val { font-size: 13px; font-weight: 800; color: var(--moon-text); }
+.moon-card .val { font-size: 12px; font-weight: 800; color: var(--moon-text); }
 
 .scroll-area { flex-grow: 1; overflow-y: auto; padding: 20px; -webkit-overflow-scrolling: touch; }
-.section { margin-bottom: 25px; }
-.section-title { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
-.section-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 
-#focus-btn { background: var(--glass-inner); border: 1px solid var(--glass-border); color: var(--text-main); padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; }
-
-.staff-flow { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-.tag { background: var(--glass-bg); padding: 8px 15px; border-radius: 20px; font-size: 14px; font-weight: 600; border: 1px solid var(--glass-border); }
+/* Inputs */
+.add-staff-box { display: flex; padding: 6px; gap: 8px; border-radius: 15px; margin-top: 10px; }
+.add-staff-box input { flex: 1; background: transparent; border: none; padding: 10px; color: var(--text-main); outline: none; }
+.mini-add-btn { background: var(--accent); color: white; border: none; padding: 0 15px; border-radius: 10px; font-weight: 700; }
 
 .task-item { background: var(--glass-bg); padding: 15px; border-radius: 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--glass-border); }
-.task-info strong { display: block; font-size: 15px; }
-.task-info span { font-size: 12px; color: var(--accent); font-weight: 700; }
-.delete-btn { color: #ef4444; border: none; background: none; font-weight: 600; font-size: 14px; }
+.delete-btn { color: #ef4444; border: none; background: none; font-size: 14px; }
 
 .action-bar { flex-shrink: 0; padding: 15px 20px 35px; border-radius: 25px 25px 0 0; }
 .assign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .assign-grid select, .assign-grid input { padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--glass-inner); color: var(--text-main); font-size: 14px; }
-.assign-grid input { grid-column: span 2; }
 .add-btn { grid-column: span 2; background: var(--accent); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; }
 
-.admin-link-zone { text-align: center; padding-top: 10px; font-size: 10px; opacity: 0.5; }
+/* Modals */
+.modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:100; backdrop-filter: blur(10px); }
+.modal-content { width:85%; max-height: 80vh; overflow-y: auto; padding:20px; border-radius:20px; }
+.admin-list { margin: 15px 0; text-align: left; }
+.admin-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--glass-border); }
 
-/* Focus Mode Logic */
+/* Focus Mode */
 body.focus-active .app-header, body.focus-active .action-bar, body.focus-active .staff-section { display: none !important; }
 body.focus-active .scroll-area { height: 100vh; padding-top: 50px; overflow: visible; }
-body.focus-active .task-item { border: 1px solid #999; }
 
 .glass-bg-blobs { position: fixed; top: 0; z-index: -1; width: 100%; height: 100%; }
 .blob { position: absolute; width: 250px; height: 250px; border-radius: 50%; filter: blur(70px); opacity: 0.4; }
 .blob-1 { background: #38bdf8; top: -20px; right: -20px; }
 .blob-2 { background: #818cf8; bottom: -20px; left: -20px; }
 
-.modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:100; backdrop-filter: blur(10px); }
-.modal-content { width:80%; padding:20px; border-radius:20px; text-align:center; }
-.danger-btn { background: #ef4444; color: white; border: none; width: 100%; padding: 12px; border-radius: 10px; font-weight: 700; margin: 10px 0; }
-.cancel-btn { background: none; border: none; color: var(--text-main); font-weight: 600; }
-/* Matching the design of the bottom bar */
-.add-staff-box {
-    display: flex;
-    padding: 6px;
-    gap: 8px;
-    border-radius: 15px;
-    margin-top: 10px;
+/* Premium 'Show All' Button */
+#focus-btn {
+    background: var(--glass-inner);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-.add-staff-box input {
-    flex: 1;
+/* Redesigned Staff Tags */
+.tag {
+    background: var(--glass-inner);
+    color: var(--text-main);
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--glass-border);
+    display: inline-block;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.tag:active {
+    transform: scale(0.9);
+    background: var(--accent);
+    color: white;
+}
+
+/* Admin Modal Styling */
+.admin-input {
+    width: 100%;
     background: transparent;
     border: none;
-    padding: 10px 15px;
     color: var(--text-main);
-    font-size: 15px;
+    font-size: 18px;
+    text-align: center;
     outline: none;
 }
 
-.mini-add-btn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 0 20px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 14px;
-    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.2);
+.admin-list {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 15px;
 }
 
-.mini-add-btn:active {
-    transform: scale(0.95);
+.admin-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--glass-border);
+    font-size: 14px;
+}
+
+.danger-btn {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+/* Vertical Task Layout */
+.task-info {
+    display: flex;
+    flex-direction: column; /* This puts the name under the task */
+    gap: 4px; /* Space between task and name */
+}
+
+.task-info strong {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    display: block;
+}
+
+.task-info span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent); /* Makes the name stand out in blue/gold */
     opacity: 0.9;
+}
+/* When Focus Mode is ON */
+body.focus-active .app-header, 
+body.focus-active .action-bar, 
+body.focus-active .staff-section,
+body.focus-active .admin-trigger-zone {
+    display: none !important;
+}
+
+body.focus-active .scroll-area {
+    height: 100vh;
+    padding-top: 40px;
+}
+
+/* Ensure the button stays visible inside the Assignments section */
+.section-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Redesign the button to match your liquid glass request */
+#focus-btn {
+    background: var(--glass-inner);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+/* Centering the Login Box in the Portal */
+.admin-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertical center */
+    align-items: center;     /* Horizontal center */
+    min-height: 80vh;        /* Takes up most of the screen height */
+    position: relative;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 280px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+}
+
+/* Ensure the Admin Controls (Presets) also look centered when they appear */
+#admin-controls {
+    width: 100%;
+    max-width: 350px;
 }
