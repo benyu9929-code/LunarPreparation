@@ -3,62 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lunar Preparation</title>
-    <link rel="manifest" href="manifest.json">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="LunarPrep">
-<link rel="apple-touch-icon" href="icon.png">
+    <title>Lunar Prep</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
     <div class="glass-bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    
     <div class="app-container">
         <header class="app-header glass">
-    <div class="header-main-row">
-        <div class="header-content">
-            <p id="today-solar" class="date-text"></p>
-            <h1 id="app-title">Lunar Preparation</h1>
-        </div>
-        <div class="header-right">
-            <div class="theme-switch" onclick="toggleTheme()">
-                <span id="theme-icon">🌙</span>
+            <div class="header-main-row">
+                <div class="header-content">
+                    <p id="today-solar" class="date-text"></p>
+                    <h1 id="app-title">Lunar Preparation</h1>
+                </div>
+                <div class="theme-switch" onclick="toggleTheme()"><span id="theme-icon">🌙</span></div>
             </div>
-        </div>
-    </div>
-    
-    <div class="moon-cards">
-        <div class="moon-card glass-inner">
-            <span class="label">Next New Moon (朔)</span>
-            <span id="next-new-moon" class="val">---</span>
-        </div>
-        <div class="moon-card glass-inner">
-            <span class="label">Next Full Moon (望)</span>
-            <span id="next-full-moon" class="val">---</span>
-        </div>
-    </div>
-</header>
+            <div class="moon-cards">
+                <div class="moon-card glass-inner"><span class="label">Next New Moon</span><span id="next-new-moon" class="val">---</span></div>
+                <div class="moon-card glass-inner"><span class="label">Next Full Moon</span><span id="next-full-moon" class="val">---</span></div>
+            </div>
+        </header>
 
         <main class="scroll-area">
-            <section class="section">
-                <h3 class="section-title">Staff Members</h3>
-                <div id="staff-tags" class="staff-flow"></div>
-                <div class="add-row glass-inner">
-                    <input type="text" id="new-staff" placeholder="Add name + Enter" onkeydown="if(event.key==='Enter') addStaff()">
-                    <button onclick="addStaff()">+</button>
-                </div>
-            </section>
-            <section class="section">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h3 class="section-title">Assignments</h3>
-        <button onclick="toggleFocusMode()" id="focus-btn" class="glass-inner" style="font-size: 12px; padding: 5px 10px; border-radius: 10px; border: 1px solid var(--glass-border); color: var(--text-main);">
-            Show All
-        </button>
+            <section class="section staff-section">
+    <h3 class="section-title">Staff Members</h3>
+    <div id="staff-tags" class="staff-flow"></div>
+    
+    <div class="add-staff-box glass-inner">
+        <input type="text" id="new-staff" placeholder="Type name here..." autocomplete="off">
+        <button onclick="addStaff()" class="mini-add-btn">Add</button>
     </div>
-    <ul id="task-list" class="task-ul"></ul>
 </section>
+
+            <section class="section">
+                <div class="section-header-row">
+                    <h3 class="section-title">Assignments</h3>
+                    <button onclick="toggleFocusMode()" id="focus-btn">Show All</button>
+                </div>
+                <ul id="task-list" class="task-ul"></ul>
+            </section>
         </main>
 
         <footer class="action-bar glass">
@@ -69,24 +56,24 @@
                     <option value="Tidy up">Tidy up</option>
                     <option value="Polish lamp">Polish lamp</option>
                     <option value="Vacuum & Mopping">Vacuum & Mopping</option>
-                    <option value="Change prayer pads">Change prayer pads</option>
                 </select>
                 <select id="staff-select"></select>
-                <input type="text" id="task-custom" placeholder="Or type task here..." onkeydown="if(event.key==='Enter') addTask()">
+                <input type="text" id="task-custom" placeholder="Or type task here...">
                 <button onclick="addTask()" class="add-btn">Assign Task</button>
             </div>
+            <div class="admin-link-zone"><span onclick="toggleAdminModal()">Admin Settings</span></div>
         </footer>
-        <div class="admin-link-zone"><span onclick="toggleAdminModal()">Admin Settings</span></div>
     </div>
 
     <div id="admin-modal" class="modal" style="display:none;">
         <div class="modal-content glass">
             <h2>Admin Reset</h2>
             <input type="password" id="admin-pass" placeholder="Password">
-            <button onclick="checkAdminReset()" class="danger-btn">Reset to Defaults</button>
+            <button onclick="checkAdminReset()" class="danger-btn">Reset Defaults</button>
             <button onclick="toggleAdminModal()" class="cancel-btn">Cancel</button>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
