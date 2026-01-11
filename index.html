@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lunar Preparation</title>
+    <link rel="manifest" href="manifest.json">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LunarPrep">
+<link rel="apple-touch-icon" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -11,23 +17,29 @@
     <div class="glass-bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
     <div class="app-container">
         <header class="app-header glass">
-            <div class="header-main-row">
-                <div class="header-content">
-                    <p id="today-solar" class="date-text"></p>
-                    <h1 id="app-title">Lunar Preparation</h1>
-                </div>
-                <div class="header-right">
-                    <div class="theme-switch" onclick="toggleTheme()"><span id="theme-icon">🌙</span></div>
-                    <div class="moon-icon-container" id="main-moon-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                    </div>
-                </div>
+    <div class="header-main-row">
+        <div class="header-content">
+            <p id="today-solar" class="date-text"></p>
+            <h1 id="app-title">Lunar Preparation</h1>
+        </div>
+        <div class="header-right">
+            <div class="theme-switch" onclick="toggleTheme()">
+                <span id="theme-icon">🌙</span>
             </div>
-            <div class="moon-cards">
-                <div class="moon-card glass-inner"><span class="label">Next New Moon (朔)</span><span id="next-new-moon" class="val">---</span></div>
-                <div class="moon-card glass-inner"><span class="label">Next Full Moon (望)</span><span id="next-full-moon" class="val">---</span></div>
-            </div>
-        </header>
+        </div>
+    </div>
+    
+    <div class="moon-cards">
+        <div class="moon-card glass-inner">
+            <span class="label">Next New Moon (朔)</span>
+            <span id="next-new-moon" class="val">---</span>
+        </div>
+        <div class="moon-card glass-inner">
+            <span class="label">Next Full Moon (望)</span>
+            <span id="next-full-moon" class="val">---</span>
+        </div>
+    </div>
+</header>
 
         <main class="scroll-area">
             <section class="section">

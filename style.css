@@ -1,132 +1,144 @@
+/* --- 1. Variables & Themes --- */
 :root {
-    /* Day Mode Settings */
-    --bg-gradient: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-    --glass-bg: rgba(255, 255, 255, 0.5);
+    /* Day Mode (Light Glass) */
+    --bg-gradient: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    --glass-bg: rgba(255, 255, 255, 0.75);
     --glass-border: rgba(255, 255, 255, 0.4);
     --glass-inner: rgba(255, 255, 255, 0.3);
     --text-main: #1d1d1f;
+    --text-sub: #48484a;
     --accent: #007aff;
+    --moon-text: #856404; /* Deep Bronze/Gold for better contrast in light mode */
     --shadow: rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="dark"] {
-    /* Dark Mode Settings */
-    --bg-gradient: linear-gradient(120deg, #0f172a 0%, #1e293b 100%);
-    --glass-bg: rgba(30, 41, 59, 0.7);
+    /* Dark Mode (Deep Glass) */
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --glass-bg: rgba(30, 41, 59, 0.85);
     --glass-border: rgba(255, 255, 255, 0.1);
     --glass-inner: rgba(0, 0, 0, 0.2);
     --text-main: #f5f5f7;
+    --text-sub: #a1a1a6;
     --accent: #0a84ff;
+    --moon-text: #ffd60a; /* Bright Yellow for dark mode */
     --shadow: rgba(0, 0, 0, 0.4);
 }
 
-body {
-    margin: 0; font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--bg-gradient); color: var(--text-main);
-    height: 100vh; overflow: hidden; transition: all 0.5s ease;
+/* --- 2. Structural Layout (The "Sandwich" Fix) --- */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', -apple-system, sans-serif;
+    overflow: hidden; /* Prevents the whole screen from bouncing */
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    transition: background 0.5s ease;
 }
 
-/* Liquid Blobs */
+.app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* Stacks header, scroll area, and footer */
+}
+
+/* --- 3. Background Liquid Blobs --- */
 .glass-bg-blobs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 .blob { position: absolute; width: 300px; height: 300px; border-radius: 50%; filter: blur(80px); opacity: 0.5; animation: floatBlob 20s infinite alternate; }
 .blob-1 { background: #38bdf8; top: -50px; right: -20px; }
 .blob-2 { background: #818cf8; bottom: -50px; left: -20px; }
-@keyframes floatBlob { from { transform: translate(0,0); } to { transform: translate(50px, 100px); } }
+@keyframes floatBlob { from { transform: translate(0,0); } to { transform: translate(40px, 80px); } }
 
-.app-container { height: 100vh; display: flex; flex-direction: column; position: relative; }
-
-.glass {
-    background: var(--glass-bg); backdrop-filter: blur(25px) saturate(180%);
+/* --- 4. Header (Fixed) --- */
+.app-header {
+    flex-shrink: 0; /* Header won't shrink */
+    padding: 50px 20px 20px;
+    border-radius: 0 0 30px 30px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px) saturate(180%);
     -webkit-backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid var(--glass-border); box-shadow: 0 10px 30px var(--shadow);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 10;
 }
 
-.glass-inner { background: var(--glass-inner); border: 1px solid var(--glass-border); border-radius: 15px; }
+.header-main-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.date-text { font-size: 11px; font-weight: 700; opacity: 0.6; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+#app-title { margin: 5px 0 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
 
-/* Header Styling */
-.app-header { padding: 45px 20px 25px; border-radius: 0 0 30px 30px; }
-.header-main-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.date-text { font-size: 12px; font-weight: 600; opacity: 0.6; margin: 0; text-transform: uppercase; }
-#app-title { margin: 5px 0 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
-.header-right { display: flex; gap: 12px; align-items: center; }
-
-.theme-switch { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; background: var(--glass-inner); }
-.moon-icon-container { padding: 8px; color: #ffd60a; animation: pulse 4s infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } }
+.theme-switch { 
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; 
+    cursor: pointer; border-radius: 50%; background: var(--glass-inner); border: 1px solid var(--glass-border);
+    font-size: 20px;
+}
 
 .moon-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.moon-card { padding: 12px; }
-.moon-card .label { display: block; font-size: 10px; opacity: 0.6; margin-bottom: 4px; font-weight: 600; }
-.moon-card .val { font-size: 13px; font-weight: 700; color: #ffd60a; }
+.moon-card { padding: 12px; border-radius: 15px; background: var(--glass-inner); border: 1px solid var(--glass-border); }
+.moon-card .label { display: block; font-size: 10px; opacity: 0.7; margin-bottom: 4px; font-weight: 600; }
+.moon-card .val { font-size: 13px; font-weight: 800; color: var(--moon-text); }
 
-/* Scroll Area */
-.scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 120px; }
-.section-title { font-size: 17px; font-weight: 700; margin-bottom: 15px; }
+/* --- 5. Scroll Area (Middle Content) --- */
+.scroll-area {
+    flex-grow: 1; /* Takes up all available space */
+    overflow-y: auto; /* Independent scrolling */
+    padding: 20px;
+    padding-bottom: 120px; /* Space for the floating action bar */
+    -webkit-overflow-scrolling: touch;
+}
+
+.section { margin-bottom: 25px; }
+.section-title { font-size: 17px; font-weight: 700; margin-bottom: 12px; opacity: 0.9; }
 
 .staff-flow { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
-.tag { background: var(--glass-bg); padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; box-shadow: 0 2px 5px var(--shadow); cursor: pointer; }
-.tag:hover { background: #fee2e2; color: #ef4444; }
+.tag { 
+    background: var(--glass-bg); padding: 8px 16px; border-radius: 20px; font-size: 14px; 
+    font-weight: 600; border: 1px solid var(--glass-border); box-shadow: 0 4px 6px var(--shadow);
+}
 
-.add-row { display: flex; overflow: hidden; padding: 5px; }
-.add-row input { flex: 1; border: none; background: transparent; padding: 10px; color: var(--text-main); font-weight: 500; }
-.add-row button { background: var(--accent); color: white; border: none; width: 40px; border-radius: 12px; font-weight: bold; }
+.add-row { display: flex; overflow: hidden; padding: 4px; border-radius: 15px; background: var(--glass-inner); border: 1px solid var(--glass-border); }
+.add-row input { flex: 1; border: none; background: transparent; padding: 10px; color: var(--text-main); font-size: 14px; outline: none; }
+.add-row button { background: var(--accent); color: white; border: none; width: 40px; border-radius: 12px; font-weight: 800; }
 
 .task-item { 
     background: var(--glass-bg); padding: 16px; border-radius: 20px; margin-bottom: 12px; 
     display: flex; justify-content: space-between; align-items: center;
+    border: 1px solid var(--glass-border); box-shadow: 0 4px 12px var(--shadow);
 }
-.task-item strong { display: block; font-size: 16px; margin-bottom: 4px; }
-.task-item span { font-size: 13px; color: var(--accent); font-weight: 600; }
-.delete-btn { background: var(--glass-inner); color: #ef4444; border: none; padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.task-info strong { display: block; font-size: 16px; margin-bottom: 2px; }
+.task-info span { font-size: 13px; color: var(--accent); font-weight: 700; }
+.delete-btn { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: none; padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; }
 
-/* Action Bar Bottom */
-.action-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px 20px 35px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-radius: 25px 25px 0 0; }
-.action-bar select { padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--glass-inner); color: var(--text-main); }
-.add-btn { grid-column: span 2; background: var(--accent); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 700; font-size: 16px; }
-
-.admin-link-zone { position: absolute; bottom: 8px; width: 100%; text-align: center; font-size: 10px; opacity: 0.3; }
-
-/* Modal */
-.modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1000; display: flex; align-items: center; justify-content: center; }
-.modal-content { width: 85%; padding: 30px; border-radius: 30px; text-align: center; }
-.modal-content input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 1px solid var(--glass-border); text-align: center; }
-.danger-btn { background: #ef4444; color: white; border: none; width: 100%; padding: 12px; border-radius: 12px; font-weight: 700; margin-bottom: 10px; }
-.cancel-btn { background: transparent; border: none; color: var(--text-main); }
-/* Keep all previous styles, just update/add these sections: */
-
-.assign-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    grid-column: span 2;
-}
-
-#task-custom {
-    grid-column: span 2;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid var(--glass-border);
-    background: var(--glass-inner);
-    color: var(--text-main);
-    font-size: 14px;
-}
-
+/* --- 6. Action Bar (Fixed Bottom) --- */
 .action-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    padding: 15px 15px 35px;
-    border-radius: 25px 25px 0 0;
+    flex-shrink: 0;
+    padding: 15px 20px 40px; /* Padding for iPhone notch */
+    border-radius: 30px 30px 0 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border-top: 1px solid var(--glass-border);
+    z-index: 10;
 }
 
-.add-btn {
-    grid-column: span 2;
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 15px;
-    font-weight: 700;
-    font-size: 16px;
-    margin-top: 5px;
+.assign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.assign-grid select, .assign-grid input { 
+    padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border); 
+    background: var(--glass-inner); color: var(--text-main); font-size: 14px; outline: none;
+}
+.assign-grid input { grid-column: span 2; }
+.add-btn { 
+    grid-column: span 2; background: var(--accent); color: white; border: none; 
+    padding: 16px; border-radius: 16px; font-weight: 700; font-size: 16px; margin-top: 5px;
+    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
 }
 
-/* ... (Include all other glass, blob, and header styles from previous response) ... */
+.admin-link-zone { text-align: center; padding: 10px 0; font-size: 10px; opacity: 0.4; letter-spacing: 1px; }
+
+/* --- 7. Admin Modal --- */
+.modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+.modal-content { width: 85%; padding: 30px; border-radius: 30px; text-align: center; border: 1px solid var(--glass-border); }
+.modal-content h2 { margin-top: 0; }
+.modal-content input { width: 100%; padding: 14px; margin: 20px 0; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--glass-inner); color: var(--text-main); text-align: center; font-size: 16px; }
+.danger-btn { background: #ef4444; color: white; border: none; width: 100%; padding: 14px; border-radius: 14px; font-weight: 700; margin-bottom: 10px; }
+.cancel-btn { background: transparent; border: none; color: var(--text-main); font-weight: 600; cursor: pointer; }
