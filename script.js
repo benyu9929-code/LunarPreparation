@@ -60,8 +60,14 @@ function showMoonList(type) {
     const today = new Date().toISOString().split('T')[0];
     const upcoming = MOON_DATA.filter(m => m.type === type && m.date >= today).slice(0, 5);
     const list = document.getElementById('moon-modal-list');
+    
     document.getElementById('moon-modal-title').innerText = `Next 5 ${type} Moons`;
-    list.innerHTML = upcoming.map(m => `<li><strong>${m.date}</strong> <span>${m.lunar}</span></li>`).join('');
+    
+    list.innerHTML = upcoming.map(m => {
+        const dayName = new Date(m.date).toLocaleDateString('en-US', { weekday: 'long' });
+        return `<li><strong>${m.date}</strong> <span style="font-size:0.8em; opacity:0.7;">${dayName}</span> <span>${m.lunar}</span></li>`;
+    }).join('');
+    
     document.getElementById('moon-modal').style.display = 'flex';
 }
 
@@ -164,12 +170,26 @@ function applyTheme() {
 
 function updateDates() {
     const now = new Date();
-    document.getElementById('today-solar').innerText = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('today-solar').innerText = now.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+
     const todayStr = now.toISOString().split('T')[0];
     const nNew = MOON_DATA.find(m => m.type === 'New' && m.date >= todayStr);
     const nFull = MOON_DATA.find(m => m.type === 'Full' && m.date >= todayStr);
-    document.getElementById('next-new-moon').innerText = nNew ? nNew.date : "TBA";
-    document.getElementById('next-full-moon').innerText = nFull ? nFull.date : "TBA";
+
+    if (nNew) {
+        const newMoonDay = new Date(nNew.date).toLocaleDateString('en-US', { weekday: 'short' });
+        document.getElementById('next-new-moon').innerText = `${nNew.date} (${newMoonDay})`;
+    }
+    
+    if (nFull) {
+        const fullMoonDay = new Date(nFull.date).toLocaleDateString('en-US', { weekday: 'short' });
+        document.getElementById('next-full-moon').innerText = `${nFull.date} (${fullMoonDay})`;
+    }
 }
 
 function toggleAdminModal() { 

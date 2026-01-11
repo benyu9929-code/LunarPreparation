@@ -49,7 +49,12 @@ body, html { height: 100%; margin: 0; font-family: 'Inter', sans-serif; overflow
 .moon-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .moon-card { padding: 10px; border-radius: 12px; cursor: pointer; }
 .moon-card .label { display: block; font-size: 10px; opacity: 0.7; }
-.moon-card .val { font-size: 12px; font-weight: 800; color: var(--moon-text); }
+.moon-card .val {
+    font-size: 11px; /* Slightly smaller to fit "2026-01-19 (Mon)" */
+    font-weight: 800;
+    color: var(--moon-text);
+    white-space: nowrap; /* Keeps it on one line */
+}
 
 .scroll-area { flex-grow: 1; overflow-y: auto; padding: 20px; -webkit-overflow-scrolling: touch; }
 
@@ -60,6 +65,24 @@ body, html { height: 100%; margin: 0; font-family: 'Inter', sans-serif; overflow
 
 .task-item { background: var(--glass-bg); padding: 15px; border-radius: 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--glass-border); }
 .delete-btn { color: #ef4444; border: none; background: none; font-size: 14px; }
+.task-item {
+    width: 90%;          /* Don't go 100% so there's a nice gap on the sides */
+    margin: 0 auto 12px; /* 'auto' pushes it to the center horizontally */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box; /* Prevents padding from pushing the box wide */
+}
+
+/* Also ensure the list itself isn't shifting left */
+.task-ul {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Forces all children to stay in the middle */
+}
 
 .action-bar { flex-shrink: 0; padding: 15px 20px 35px; border-radius: 25px 25px 0 0; }
 .assign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -74,7 +97,7 @@ body, html { height: 100%; margin: 0; font-family: 'Inter', sans-serif; overflow
 
 /* Focus Mode */
 body.focus-active .app-header, body.focus-active .action-bar, body.focus-active .staff-section { display: none !important; }
-body.focus-active .scroll-area { height: 100vh; padding-top: 50px; overflow: visible; }
+body.focus-active .scroll-area { height: 100vh; padding-top: 50px; overflow-y: auto; }
 
 .glass-bg-blobs { position: fixed; top: 0; z-index: -1; width: 100%; height: 100%; }
 .blob { position: absolute; width: 250px; height: 250px; border-radius: 50%; filter: blur(70px); opacity: 0.4; }
