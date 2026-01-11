@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lunar Prep</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon.png">
+</head>
+<body>
+    <div class="glass-bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    
+    <div class="app-container">
+        <header class="app-header glass">
+            <div class="header-main-row">
+                <div class="header-content">
+                    <p id="today-solar" class="date-text"></p>
+                    <h1 id="app-title">Lunar Preparation</h1>
+                </div>
+                <div class="theme-switch" onclick="toggleTheme()"><span id="theme-icon">🌙</span></div>
+            </div>
+            <div class="moon-cards">
+                <div class="moon-card glass-inner" onclick="showMoonList('New')">
+                    <span class="label">Next New Moon</span>
+                    <span id="next-new-moon" class="val">---</span>
+                </div>
+                <div class="moon-card glass-inner" onclick="showMoonList('Full')">
+                    <span class="label">Next Full Moon</span>
+                    <span id="next-full-moon" class="val">---</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="scroll-area">
+            <section class="section staff-section">
+                <h3 class="section-title">Staff Members</h3>
+                <div id="staff-tags" class="staff-flow"></div>
+                <div class="add-staff-box glass-inner">
+                    <input type="text" id="new-staff" placeholder="Type name...">
+                    <button onclick="addStaff()" class="mini-add-btn">Add</button>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header-row">
+                    <h3 class="section-title">Assignments</h3>
+                    <button onclick="toggleFocusMode()" id="focus-btn">Show All</button>
+                </div>
+                <ul id="task-list" class="task-ul"></ul>
+            </section>
+
+            <section class="section admin-trigger-zone" style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
+                <span onclick="toggleAdminModal()" class="admin-link">Admin Settings</span>
+            </section>
+        </main>
+
+        <footer class="action-bar glass">
+            <div class="assign-grid">
+                <select id="task-presets" onchange="syncTaskInput(this.value)"></select>
+                <select id="staff-select"></select>
+                <input type="text" id="task-custom" placeholder="Or type task here...">
+                <button onclick="addTask()" class="add-btn">Assign Task</button>
+            </div>
+        </footer>
+    </div>
+
+    <div id="moon-modal" class="modal" style="display:none;" onclick="closeMoonModal(event)">
+        <div class="modal-content glass">
+            <h2 id="moon-modal-title">Upcoming Moons</h2>
+            <ul id="moon-modal-list" class="moon-data-list"></ul>
+            <button onclick="document.getElementById('moon-modal').style.display='none'" class="cancel-btn">Close</button>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="modal" style="display:none;">
+        <div class="modal-content glass admin-centered">
+            <h2 class="section-title" style="font-size: 24px;">Admin Portal</h2>
+            
+            <div id="login-zone" class="glass-inner login-box">
+                <input type="password" id="admin-pass" class="admin-input" placeholder="Password">
+            </div>
+            
+            <div id="admin-controls" style="display:none; width: 100%;">
+                <div class="admin-section">
+                    <h3 class="section-title">Edit Task</h3>
+                    <div id="preset-manager-list" class="admin-list glass-inner"></div>
+                    <div class="add-staff-box glass-inner" style="margin-top:15px;">
+                        <input type="text" id="new-preset" placeholder="New task...">
+                        <button onclick="addPreset()" class="mini-add-btn">Add</button>
+                    </div>
+                </div>
+                <button onclick="checkAdminReset()" class="danger-btn">Reset App</button>
+            </div>
+
+            <button onclick="verifyAdmin()" id="verify-btn" class="add-btn" style="margin-top: 10px;">Login</button>
+            
+            <div class="modal-footer">
+                <button onclick="toggleAdminModal()" class="back-btn glass-inner">Back to App</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
