@@ -54,16 +54,6 @@ function init() {
     setupScrollFade();
 }
 
-// Header Fade Logic
-function setupScrollFade() {
-    const scrollArea = document.querySelector('.scroll-area');
-    const header = document.querySelector('.app-header');
-    scrollArea.addEventListener('scroll', () => {
-        let opacity = 1 - (scrollArea.scrollTop / 150);
-        header.style.opacity = Math.max(0, Math.min(1, opacity));
-        header.style.transform = `translateY(-${scrollArea.scrollTop / 4}px)`;
-    });
-}
 
 // Moon List Functions
 function showMoonList(type) {
