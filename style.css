@@ -142,3 +142,29 @@ body, html {
 .modal-content input { width: 100%; padding: 14px; margin: 20px 0; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--glass-inner); color: var(--text-main); text-align: center; font-size: 16px; }
 .danger-btn { background: #ef4444; color: white; border: none; width: 100%; padding: 14px; border-radius: 14px; font-weight: 700; margin-bottom: 10px; }
 .cancel-btn { background: transparent; border: none; color: var(--text-main); font-weight: 600; cursor: pointer; }
+/* Focus Mode - Hides everything for easy screenshotting */
+body.focus-active .app-header, 
+body.focus-active .action-bar, 
+body.focus-active .glass-bg-blobs,
+body.focus-active .admin-link-zone,
+body.focus-active .section:first-child {
+    display: none !important;
+}
+
+body.focus-active .scroll-area {
+    padding-top: 40px;
+    height: 100vh;
+    overflow: visible; /* Allows the list to be as long as it needs to be */
+}
+
+body.focus-active .task-item {
+    background: white; /* High contrast for screenshot */
+    color: black;
+    border: 1px solid #ccc;
+}
+
+/* Day/Night specific text fix for focus mode */
+[data-theme="dark"] body.focus-active .task-item {
+    background: #1e293b;
+    color: white;
+}

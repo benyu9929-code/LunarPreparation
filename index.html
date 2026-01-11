@@ -51,9 +51,14 @@
                 </div>
             </section>
             <section class="section">
-                <h3 class="section-title">Assignments</h3>
-                <ul id="task-list" class="task-ul"></ul>
-            </section>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 class="section-title">Assignments</h3>
+        <button onclick="toggleFocusMode()" id="focus-btn" class="glass-inner" style="font-size: 12px; padding: 5px 10px; border-radius: 10px; border: 1px solid var(--glass-border); color: var(--text-main);">
+            Show All
+        </button>
+    </div>
+    <ul id="task-list" class="task-ul"></ul>
+</section>
         </main>
 
         <footer class="action-bar glass">

@@ -204,3 +204,15 @@ function checkAdminReset() {
 
 // Run App
 init();
+function toggleFocusMode() {
+    const isFocus = document.body.classList.toggle('focus-active');
+    const btn = document.getElementById('focus-btn');
+    
+    if (isFocus) {
+        btn.innerText = "Exit View";
+        // Optional: Auto-scroll to top for the best screenshot start
+        window.scrollTo(0,0);
+    } else {
+        btn.innerText = "Show All";
+    }
+}
